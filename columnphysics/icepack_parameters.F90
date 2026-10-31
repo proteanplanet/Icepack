@@ -63,8 +63,10 @@
          p666 = c2/c3, &
          spval_const= -1.0e36_dbl_kind
 
+      ! Fixed day unit: NIST SP 330 (2019), Section 4, Table 8.
+      ! doi:10.6028/NIST.SP.330-2019; not a sidereal day or a UTC leap-second day.
       real (kind=dbl_kind), public :: &
-         secday = 86400.0_dbl_kind ,&! seconds in calendar day
+         secday = 86400.0_dbl_kind ,&! fixed day duration (s); optional secday_in override
          puny   = 1.0e-11_dbl_kind, &
          bignum = 1.0e+30_dbl_kind, &
          pi     = 3.14159265358979323846_dbl_kind
@@ -657,7 +659,7 @@
       !-----------------------------------------------------------------
 
       real (kind=dbl_kind), intent(in), optional :: &
-         secday_in,     & !
+         secday_in,     & ! fixed day duration (s); default 86400
          puny_in,       & !
          bignum_in,     & !
          pi_in            !
