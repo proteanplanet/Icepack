@@ -642,7 +642,8 @@
          ratio_C2N_diatoms_in, ratio_C2N_sp_in, ratio_C2N_phaeo_in, &
          ratio_chl2N_diatoms_in, ratio_chl2N_sp_in, ratio_chl2N_phaeo_in, &
          F_abs_chl_diatoms_in, F_abs_chl_sp_in, F_abs_chl_phaeo_in, &
-         ratio_C2N_proteins_in )
+         ratio_C2N_proteins_in, &
+         Lfresh_in )
 
       !-----------------------------------------------------------------
       ! control settings
@@ -688,6 +689,7 @@
          Tffresh_in,    & ! freezing temp of fresh ice (K)
          Lsub_in,       & ! latent heat, sublimation freshwater (J/kg)
          Lvap_in,       & ! latent heat, vaporization freshwater (J/kg)
+         Lfresh_in,     & ! optional override; otherwise derived as Lsub - Lvap (J/kg)
          Timelt_in,     & ! melting temperature, ice top surface  (C)
          Tsmelt_in,     & ! melting temperature, snow top surface (C)
          ice_ref_salinity_in, & ! (ppt)
@@ -1566,6 +1568,8 @@
 
       call icepack_recompute_constants()
       if (icepack_warnings_aborted(subname)) return
+      ! Allow a caller to provide fusion heat independently of Lsub - Lvap.
+      if (present(Lfresh_in)) Lfresh = Lfresh_in
 
       end subroutine icepack_init_parameters
 
